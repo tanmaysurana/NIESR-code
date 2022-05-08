@@ -23,6 +23,7 @@ class PickleDataset(Dataset):
                     self.data_dict[key]['feature'].shape[0] >= min_feature_length and 
                     len(self.data_dict[key]['token_ids']) <= max_text_length and 
                     len(self.data_dict[key]['token_ids']) >= min_text_length]
+            
         else:
             keys = [key for key in self.data_dict]
 

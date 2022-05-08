@@ -24,7 +24,7 @@ if __name__ == '__main__':
     # gamma represents the value to multiply on disentenglement task
     # delta represents the dropout rate on the "add-noise" layer
     with open(args.config, 'r') as f:
-        config = yaml.load(f)
+        config = yaml.load(f, Loader=yaml.Loader)
     
     state_dict = None
     if args.load_model:
