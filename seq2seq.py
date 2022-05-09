@@ -237,8 +237,8 @@ class Seq2seq(object):
             loss.backward()
             torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=self.config['max_grad_norm'])
             self.gen_opt.step()
-            
-            print(f'epoch: {epoch}, [{train_steps + 1}/{total_steps}], loss: {loss:.3f}', end='\r')
+            if (train_steps + 1) % 1000 == 0:
+                print(f'epoch: {epoch}, [{train_steps + 1}/{total_steps}], loss: {loss:.3f}')
             # add to logger
             tag = self.config['tag']
             self.logger.scalar_summary(tag=f'{tag}/train/loss', value=loss.item(), 

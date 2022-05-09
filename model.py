@@ -270,7 +270,7 @@ class E2E(torch.nn.Module):
     def forward(self, data, ilens, true_label=None, tf_rate=1.0, 
                 max_dec_timesteps=200, sample=False):
         
-        enc_outputs, enc_lens, _, _ = self.encoder(data, ilens)
+        enc_outputs, enc_lens, _, _ = self.encoder(data, ilens.cpu().type(torch.int64))
         logits, log_probs, prediction, attns =\
             self.decoder(enc_outputs, enc_lens, true_label, tf_rate=tf_rate, 
                          max_dec_timesteps=max_dec_timesteps, sample=sample)
@@ -291,50 +291,52 @@ class E2E(torch.nn.Module):
 class disentangle_clean(nn.Module):
     def __init__(self, clean_repre_dim, hidden_dim, nuisance_dim):
         super().__init__()
-        self.LSTM = torch.nn.LSTM(clean_repre_dim, hidden_dim, num_layers=1, batch_first=True, bidirectional=True)
-        self.dnn = torch.nn.Linear(hidden_dim*2, hidden_dim)
-        self.output_layer = torch.nn.Linear(hidden_dim, nuisance_dim)
-        self.activation = nn.LeakyReLU(0.2)
+        # self.LSTM = torch.nn.LSTM(clean_repre_dim, hidden_dim, num_layers=1, batch_first=True, bidirectional=True)
+        # self.dnn = torch.nn.Linear(hidden_dim*2, hidden_dim)
+        # self.output_layer = torch.nn.Linear(hidden_dim, nuisance_dim)
+        # self.activation = nn.LeakyReLU(0.2)
+        self.param = torch.nn.parameter.Parameter()
         
     def forward(self, clean_repre, ilens):
-        total_length = clean_repre.size(1)
-        clean_pad = pack_padded_sequence(clean_repre, ilens, batch_first=True)
-        self.LSTM.flatten_parameters()
-        output,_ = self.LSTM(clean_pad) # batch_size x seq_len x hidden_dim
-        output, _ = pad_packed_sequence(output, batch_first=True,
-                                        total_length=total_length)
-        output = F.dropout(output, 0.2, training=self.training)
-        output = self.dnn(output)
-        output = self.activation(output)
-        output = F.dropout(output, 0.2, training=self.training)
-        output = self.output_layer(output)
-        output = F.dropout(output, 0.2, training=self.training)
-        output = torch.tanh(output)
-        return output
+        # total_length = clean_repre.size(1)
+        # clean_pad = pack_padded_sequence(clean_repre, ilens, batch_first=True)
+        # self.LSTM.flatten_parameters()
+        # output,_ = self.LSTM(clean_pad) # batch_size x seq_len x hidden_dim
+        # output, _ = pad_packed_sequence(output, batch_first=True,
+        #                                 total_length=total_length)
+        # output = F.dropout(output, 0.2, training=self.training)
+        # output = self.dnn(output)
+        # output = self.activation(output)
+        # output = F.dropout(output, 0.2, training=self.training)
+        # output = self.output_layer(output)
+        # output = F.dropout(output, 0.2, training=self.training)
+        # output = torch.tanh(output)
+        return clean_repre
 
 class disentangle_nuisance(nn.Module):
     def __init__(self, nuisance_dim, hidden_dim, clean_repre_dim):
         super().__init__()
-        self.LSTM = torch.nn.LSTM(nuisance_dim, hidden_dim, num_layers=1, batch_first=True, bidirectional=True)
-        self.dnn = torch.nn.Linear(hidden_dim*2, hidden_dim)
-        self.output_layer = torch.nn.Linear(hidden_dim, clean_repre_dim)
-        self.activation = nn.LeakyReLU(0.2)
+        # self.LSTM = torch.nn.LSTM(nuisance_dim, hidden_dim, num_layers=1, batch_first=True, bidirectional=True)
+        # self.dnn = torch.nn.Linear(hidden_dim*2, hidden_dim)
+        # self.output_layer = torch.nn.Linear(hidden_dim, clean_repre_dim)
+        # self.activation = nn.LeakyReLU(0.2)
+        self.param = torch.nn.parameter.Parameter()
     
     def forward(self, nuisance_data, ilens):
-        total_length = nuisance_data.size(1)
-        nuisance_pad = pack_padded_sequence(nuisance_data, ilens, batch_first=True)
-        self.LSTM.flatten_parameters()
-        output, _ = self.LSTM(nuisance_pad) # batch_size x seq_len x hidden_dim
-        output, _ = pad_packed_sequence(output, batch_first=True,
-                                        total_length=total_length)
-        output = F.dropout(output, 0.2, training=self.training)
-        output = self.dnn(output)
-        output = self.activation(output)
-        output = F.dropout(output, 0.2, training=self.training)
-        output = self.output_layer(output)
-        output = F.dropout(output, 0.2, training=self.training)
-        output = torch.tanh(output)
-        return output
+        # total_length = nuisance_data.size(1)
+        # nuisance_pad = pack_padded_sequence(nuisance_data, ilens, batch_first=True)
+        # self.LSTM.flatten_parameters()
+        # output, _ = self.LSTM(nuisance_pad) # batch_size x seq_len x hidden_dim
+        # output, _ = pad_packed_sequence(output, batch_first=True,
+        #                                 total_length=total_length)
+        # output = F.dropout(output, 0.2, training=self.training)
+        # output = self.dnn(output)
+        # output = self.activation(output)
+        # output = F.dropout(output, 0.2, training=self.training)
+        # output = self.output_layer(output)
+        # output = F.dropout(output, 0.2, training=self.training)
+        # output = torch.tanh(output)
+        return nuisance_data
 
 class addnoiselayer(nn.Module):
     def __init__(self, dropout_p):

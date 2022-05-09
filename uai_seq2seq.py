@@ -407,8 +407,10 @@ class UAI_seq2seq(object):
             
             predict_nuisance = self.disen_clean(clean_repre, enc_lens)
             predict_clean = self.disen_nuisance(nuisance, nuisance_lens)
-            rand_vec1 = self._random_target(clean_repre, 'tanh')
+            # rand_vec1 = self._random_target(clean_repre, 'tanh')
+            rand_vec1 = clean_repre
             rand_vec2 = self._random_target(nuisance, 'tanh')
+            rand_vec2 = nuisance
             loss_disclean = torch.mean((predict_clean-rand_vec1)**2)*self.gamma
             total_loss_disclean += loss_disclean.item()
             loss_disnoise = torch.mean((predict_nuisance-rand_vec2)**2)*self.gamma
@@ -419,9 +421,10 @@ class UAI_seq2seq(object):
             (loss+recons_loss+loss_disclean+loss_disnoise).backward()
             torch.nn.utils.clip_grad_norm_(self.params_m1, max_norm=self.config['max_grad_norm'])
             self.optimizer_m1.step()
+
             print(f'epoch: {epoch}, [{train_steps + 1}/{total_steps}], loss: {loss:.3f},'
                   f'rec_l: {recons_loss:.3f}, dis_clean:{loss_disclean:.4f},'
-                  f'dis_noise:{loss_disnoise:.4f}', end='\r')
+                  f'dis_noise:{loss_disnoise:.4f}')
             tag = self.config['tag']
             self.logger.scalar_summary(tag=f'{tag}/train/loss', 
                                        value=(loss.item())/self.config['alpha'], 

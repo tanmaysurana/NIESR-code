@@ -65,6 +65,7 @@ if __name__ == '__main__':
             wav, sr = librosa.load(os.path.join(root, fpath), sr=16_000)
             wav = librosa.util.normalize(wav)
             feat = librosa.feature.melspectrogram(y=wav, sr=sr, n_mels=40)
+            del wav
             feat = feat.reshape(feat.shape[::-1])
             target_list = targets[index].split()
             target_list[-1] = '<EOS>'
@@ -82,12 +83,14 @@ if __name__ == '__main__':
     
     dataset_dict_file = open(os.path.join(args.output_dir, args.set) + '.p', "wb")
     pickle.dump(dataset_dict, dataset_dict_file)
+    dataset_dict_file.close()
     if args.set == 'train':
         vocab_dict_file = open(os.path.join(args.output_dir, 'vocab_dict') + '.p', "wb")
         pickle.dump(vocab_dict, vocab_dict_file)
+        vocab_dict_file.close()
         non_lang_dict_file = open(os.path.join(args.output_dir, 'non_lang_syms') + '.p', "wb")
         pickle.dump({}, non_lang_dict_file)
-
+        non_lang_dict_file.close()
 
 # train
 # python3.8 prep_swbd.py /home/tanmay/swbd/data/train.tsv --set train --ltr /home/tanmay/swbd/data/train2_unk.ltr --speaker /home/tanmay/swbd/data/train.speaker --output-dir /home/tanmay/swbd/niesr
