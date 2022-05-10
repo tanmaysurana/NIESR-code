@@ -118,6 +118,16 @@ def calculate_cer(hyps, refs):
         total_len += len(ref)
     return total_dis / total_len
 
+def calculate_wer(hyps, refs):
+    total_dis, total_len = 0., 0.
+    for hyp, ref in zip(hyps, refs):
+        h = hyp.strip().split(' | ')
+        r = ref.strip().split(' | ')
+        dis = editdistance.eval(h, r)
+        total_dis += dis
+        total_len += len(r)
+    return total_dis / total_len
+
 def trim_representation(repres, ilens):
     # repres is in (seq_len, dim); ilens is a long tensor)
     length = ilens.cpu().item()

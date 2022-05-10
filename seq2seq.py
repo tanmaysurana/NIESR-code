@@ -145,9 +145,9 @@ class Seq2seq(object):
             gold_transcripts+=trans
         
         avg_loss = total_loss / len(self.dev_loader)
-        cer, prediction_sents, ground_truth_sents = self.ind2sent(all_prediction, all_ys)
+        cer, wer, prediction_sents, ground_truth_sents = self.ind2sent(all_prediction, all_ys)
         self.model.train()
-        return avg_loss, cer, prediction_sents, ground_truth_sents
+        return avg_loss, cer, wer, prediction_sents, ground_truth_sents
     
     def ind2sent(self, all_prediction, all_ys):
         # remove eos and pad
@@ -157,7 +157,8 @@ class Seq2seq(object):
         ground_truth_sents = to_sents(all_ys, self.vocab, self.non_lang_syms)
         # calculate cer
         cer = calculate_cer(prediction_til_eos, all_ys)
-        return cer, prediction_sents, ground_truth_sents
+        wer = calculate_wer(prediction_til_eos, all_ys)
+        return cer, wer, prediction_sents, ground_truth_sents
 
     def test(self, state_dict=None):
         # load model
@@ -189,8 +190,8 @@ class Seq2seq(object):
             all_prediction = all_prediction + prediction.cpu().numpy().tolist()
             all_ys = all_ys + [y.cpu().numpy().tolist() for y in ys]
             gold_transcripts+=trans
-        cer, prediction_sents, ground_truth_sents = self.ind2sent(all_prediction, all_ys)
-        print(f'dev set CER: {cer:.4f}')
+        cer, wer, prediction_sents, ground_truth_sents = self.ind2sent(all_prediction, all_ys)
+        print(f'dev set CER: {cer:.4f}, dev set WER: {wer:.4f}')
 
         all_prediction, all_ys = [], []
         gold_transcripts = []
@@ -206,11 +207,11 @@ class Seq2seq(object):
             all_ys = all_ys + [y.cpu().numpy().tolist() for y in ys]
             gold_transcripts+=trans
         self.model.train()
-        cer, prediction_sents, ground_truth_sents = self.ind2sent(all_prediction, all_ys)
+        cer, wer, prediction_sents, ground_truth_sents = self.ind2sent(all_prediction, all_ys)
         with open(f'{test_file_name}.txt', 'w') as f:
             for p in prediction_sents:
                 f.write(f'{p}\n')
-        print(f'{test_file_name}: {len(prediction_sents)} utterances, CER={cer:.4f}')
+        print(f'{test_file_name}: {len(prediction_sents)} utterances, CER={cer:.4f}, WER={wer:.4f}')
         return cer
     
     def train_one_epoch(self, epoch, tf_rate):
@@ -281,9 +282,9 @@ class Seq2seq(object):
             avg_train_loss = self.train_one_epoch(epoch, tf_rate)
 
             # validation
-            avg_valid_loss, cer, prediction_sents, ground_truth_sents= self.validation()
+            avg_valid_loss, cer, wer, prediction_sents, ground_truth_sents= self.validation()
             print(f'Epoch: {epoch}, tf_rate={tf_rate:.3f}, train_loss={avg_train_loss:.4f}, '
-                  f'valid_loss={avg_valid_loss:.4f}, val_CER={cer:.4f}')
+                  f'valid_loss={avg_valid_loss:.4f}, val_CER={cer:.4f}, val_WER={wer:.4f}')
             for param_group in self.gen_opt.param_groups:
                 print('Current Learning Rate: '+ str(param_group['lr']))
             # add to tensorboard
