@@ -1,6 +1,6 @@
-logdir: ./log/log_swbd_base
+logdir: /content/drive/MyDrive/niesr_log/log_swbd_base
 dataset_root_dir: /content/niesr
-labeled_set: dev
+labeled_set: train
 dev_set: dev
 test_set: test
 max_feature_length: 2040
@@ -26,7 +26,7 @@ embedding_dim: 50
 learning_rate: 0.0005
 weight_decay: 0.000001
 max_grad_norm: 5
-load_model_path: ./models/swbd_base/swbd_best
+load_model_path: /content/drive/MyDrive/niesr_models/swbd_base/swbd_best
 retrieve_learning_rate: 0.0005
 load_optimizer: True
 init_tf_rate: 1.0
@@ -38,7 +38,7 @@ add_gaussian: False
 gaussian_epoch: 20
 gaussian_std: 0.075
 tag: swbd
-model_dir: ./models/swbd_base
+model_dir: /content/drive/MyDrive/niesr_models/swbd_base
 model_name: swbd_base
 vocab_path: /content/niesr/vocab_dict.p
 non_lang_syms_path: /content/niesr/non_lang_syms.p

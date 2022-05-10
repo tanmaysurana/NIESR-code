@@ -421,10 +421,10 @@ class UAI_seq2seq(object):
             (loss+recons_loss+loss_disclean+loss_disnoise).backward()
             torch.nn.utils.clip_grad_norm_(self.params_m1, max_norm=self.config['max_grad_norm'])
             self.optimizer_m1.step()
-
-            print(f'epoch: {epoch}, [{train_steps + 1}/{total_steps}], loss: {loss:.3f},'
-                  f'rec_l: {recons_loss:.3f}, dis_clean:{loss_disclean:.4f},'
-                  f'dis_noise:{loss_disnoise:.4f}')
+            if (train_steps + 1) % 1000 == 0:
+                print(f'epoch: {epoch}, [{train_steps + 1}/{total_steps}], loss: {loss:.3f},'
+                    f'rec_l: {recons_loss:.3f}, dis_clean:{loss_disclean:.4f},'
+                    f'dis_noise:{loss_disnoise:.4f}')
             tag = self.config['tag']
             self.logger.scalar_summary(tag=f'{tag}/train/loss', 
                                        value=(loss.item())/self.config['alpha'], 

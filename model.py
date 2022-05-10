@@ -68,7 +68,7 @@ class Encoder(torch.nn.Module):
                            dropout_rate=dropout_rate, output_dim=output_dim)
 
     def forward(self, x, ilens):
-        out, ilens, first_out, first_lens = self.enc2(x, ilens)
+        out, ilens, first_out, first_lens = self.enc2(x, ilens.cpu().type(torch.int64))
         return out, ilens, first_out, first_lens
 
 class AttLoc(torch.nn.Module):
