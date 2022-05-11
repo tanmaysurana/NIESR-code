@@ -5,6 +5,7 @@ import editdistance
 import torch.nn as nn
 import torch.nn.init as init
 from collections import OrderedDict
+from jiwer import wer
 
 def pad_list(xs, pad_value=0):
     '''
@@ -120,13 +121,10 @@ def calculate_cer(hyps, refs):
 
 def calculate_wer(hyps, refs):
     total_dis, total_len = 0., 0.
-    for hyp, ref in zip(hyps, refs):
-        h = hyp.strip().split(' | ')
-        r = ref.strip().split(' | ')
-        dis = editdistance.eval(h, r)
-        total_dis += dis
-        total_len += len(r)
-    return total_dis / total_len
+    hyps = [" ".join(hyp.split('|')) for hyp in hyps]
+    refs = [" ".join(ref.split('|')) for ref in refs]
+    dis = wer(refs, hyps)
+    return dis
 
 def trim_representation(repres, ilens):
     # repres is in (seq_len, dim); ilens is a long tensor)
