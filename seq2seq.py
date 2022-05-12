@@ -146,11 +146,6 @@ class Seq2seq(object):
         
         avg_loss = total_loss / len(self.dev_loader)
         cer, wer, prediction_sents, ground_truth_sents = self.ind2sent(all_prediction, all_ys)
-	print("-" * 25)
-	print(prediction_sents)
-	print("-" * 25)
-	print(ground_truth_sents)
-        print("-" * 25)
 	self.model.train()
         return avg_loss, cer, wer, prediction_sents, ground_truth_sents
     
