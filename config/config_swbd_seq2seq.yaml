@@ -5,8 +5,8 @@ dev_set: dev
 test_set: test
 max_feature_length: 2040
 min_feature_length: 1
-max_text_length: 212
-min_text_length: 1
+max_text_length: 220
+min_text_length: 3
 max_dec_timesteps: 220
 batch_size: 128
 shuffle: True
