@@ -1,4 +1,4 @@
-logdir: /content/drive/MyDrive/niesr_log/log_swbd_uai/swbd
+logdir: /content/drive/MyDrive/niesr_log_uai/log_swbd_uai/swbd
 dataset_root_dir: /content/niesr
 labeled_set: train
 dev_set: dev
@@ -30,7 +30,7 @@ learning_rate_m2: 0
 weight_decay_m1: 0.000001
 weight_decay_m2: 0.000001
 max_grad_norm: 5
-load_model_path: /content/drive/MyDrive/niesr_models/swbd_uai/swbd_uai_best
+load_model_path: /content/drive/MyDrive/niesr_models_uai/swbd_uai/swbd_uai_best
 retrieve_learning_rate1: 0.0005
 retrieve_learning_rate2: 0.001
 load_optimizer: True
@@ -43,7 +43,7 @@ add_gaussian: False
 gaussian_epoch: 20
 gaussian_std: 0.075
 tag: swbd_uai
-model_dir: /content/drive/MyDrive/niesr_models/swbd_uai
+model_dir: /content/drive/MyDrive/niesr_models_uai/swbd_uai
 model_name: swbd_uai
 vocab_path: /content/niesr/vocab_dict.p
 non_lang_syms_path: /content/niesr/non_lang_syms.p
