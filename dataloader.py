@@ -5,7 +5,7 @@ from dataset import PickleDataset
 
 def _collate_fn(l):
     l.sort(key=lambda x: x[0].shape[0], reverse=True)
-    features = [torch.from_numpy(feature).float() for feature, _,_,_,_ in l]
+    features = [torch.from_numpy(feature.reshape(feature.shape[::-1])).float() for feature, _,_,_,_ in l]
     padded_features = torch.nn.utils.rnn.pad_sequence(features, batch_first=True, padding_value=0)
     ilens = [feature.shape[0] for feature, _,_,_,_ in l]
     texts = [torch.from_numpy(np.array(text)) for _, text,_,_,_ in l]
