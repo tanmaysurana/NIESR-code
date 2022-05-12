@@ -8,7 +8,7 @@ min_feature_length: 1
 max_text_length: 212
 min_text_length: 1
 max_dec_timesteps: 220
-batch_size: 32
+batch_size: 128
 shuffle: True
 ls_weight: 0.05
 input_dim: 40
