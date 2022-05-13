@@ -26,7 +26,7 @@ embedding_dim: 50
 learning_rate: 0.0005
 weight_decay: 0.000001
 max_grad_norm: 5
-load_model_path: /content/drive/MyDrive/niesr_models_base/swbd_base/swbd_best
+load_model_path: /content/drive/MyDrive/niesr_models_base/swbd_base/swbd_base_latest
 retrieve_learning_rate: 0.0005
 load_optimizer: True
 init_tf_rate: 1.0
