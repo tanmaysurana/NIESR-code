@@ -255,7 +255,7 @@ class UAI_seq2seq(object):
         ground_truth_sents = to_sents(all_ys, self.vocab, self.non_lang_syms)
         # calculate cer
         cer = calculate_cer(prediction_til_eos, all_ys)
-        wer = calculate_wer(prediction_til_eos, all_ys)
+        wer = calculate_wer(prediction_sents, ground_truth_sents)
         return cer, wer, prediction_sents, ground_truth_sents
 
     def test(self, state_dict=None):
