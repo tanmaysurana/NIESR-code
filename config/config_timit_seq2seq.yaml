@@ -14,7 +14,7 @@ ls_weight: 0.05
 input_dim: 80
 enc_hidden_dim: 200
 enc_output_dim: 200
-enc_n_layers: 2
+enc_n_layers: 4
 subsample: [2, 1]
 dropout_rate: 0.2
 dec_hidden_dim: 200
