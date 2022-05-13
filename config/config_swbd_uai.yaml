@@ -30,7 +30,7 @@ learning_rate_m2: 0
 weight_decay_m1: 0.000001
 weight_decay_m2: 0.000001
 max_grad_norm: 5
-load_model_path: /content/drive/MyDrive/niesr_models_uai/swbd_uai/swbd_uai_best
+load_model_path: /content/drive/MyDrive/niesr_models_uai/swbd_uai/swbd_uai_latest
 retrieve_learning_rate1: 0.0005
 retrieve_learning_rate2: 0.001
 load_optimizer: True
