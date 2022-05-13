@@ -8,14 +8,14 @@ min_feature_length: 1
 max_text_length: 220
 min_text_length: 1
 max_dec_timesteps: 220
-batch_size: 128
+batch_size: 96
 shuffle: True
 ls_weight: 0.05
 input_dim: 40
 enc_hidden_dim: 200
 enc_output_dim: 200
-enc_n_layers: 2
-rec_n_layers: 2
+enc_n_layers: 4
+rec_n_layers: 4
 subsample: [2, 1]
 downsample: [2, 1]
 dropout_rate: 0.2
@@ -25,7 +25,7 @@ conv_channels: 10
 conv_kernel_size: 100
 att_odim: 200
 embedding_dim: 50
-learning_rate_m1: 0.0001
+learning_rate_m1: 0.0005
 learning_rate_m2: 0
 weight_decay_m1: 0.000001
 weight_decay_m2: 0.000001
