@@ -15,7 +15,7 @@ input_dim: 40
 enc_hidden_dim: 200
 enc_output_dim: 200
 enc_n_layers: 4
-subsample: [2, 1]
+subsample: [2, 1, 1, 1]
 dropout_rate: 0.2
 dec_hidden_dim: 200
 att_dim: 200
