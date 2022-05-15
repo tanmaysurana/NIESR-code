@@ -5,19 +5,19 @@ dev_set: dev
 test_set: test
 max_feature_length: 2040
 min_feature_length: 1
-max_text_length: 220
+max_text_length: 212
 min_text_length: 1
 max_dec_timesteps: 220
-batch_size: 96
+batch_size: 24
 shuffle: True
 ls_weight: 0.05
 input_dim: 40
 enc_hidden_dim: 200
 enc_output_dim: 200
-enc_n_layers: 4
-rec_n_layers: 4
-subsample: [2, 1, 1, 1]
-downsample: [2, 1, 1, 1]
+enc_n_layers: 3
+rec_n_layers: 3
+subsample: [2, 1, 1]
+downsample: [2, 1, 1]
 dropout_rate: 0.2
 dec_hidden_dim: 200
 att_dim: 200
@@ -26,19 +26,19 @@ conv_kernel_size: 100
 att_odim: 200
 embedding_dim: 50
 learning_rate_m1: 0.0005
-learning_rate_m2: 0
+learning_rate_m2: 0.0
 weight_decay_m1: 0.000001
 weight_decay_m2: 0.000001
 max_grad_norm: 5
 load_model_path: /content/drive/MyDrive/niesr_models_uai/swbd_uai/swbd_uai_latest
 retrieve_learning_rate1: 0.0005
-retrieve_learning_rate2: 0.001
+retrieve_learning_rate2: 0.0
 load_optimizer: True
 init_tf_rate: 1.0
 tf_start_decay_epochs: 40
 tf_rate_lowerbound: 1.0
 tf_decay_epochs: 90
-epochs: 300
+epochs: 30
 add_gaussian: False
 gaussian_epoch: 20
 gaussian_std: 0.075
