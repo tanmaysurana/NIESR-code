@@ -8,7 +8,7 @@ min_feature_length: 1
 max_text_length: 220
 min_text_length: 1
 max_dec_timesteps: 220
-batch_size: 96
+batch_size: 32
 shuffle: True
 ls_weight: 0.05
 input_dim: 40
@@ -23,11 +23,11 @@ conv_channels: 10
 conv_kernel_size: 100
 att_odim: 200
 embedding_dim: 50
-learning_rate: 0.0025
+learning_rate: 0.0005
 weight_decay: 0.000001
 max_grad_norm: 5
 load_model_path: /content/drive/MyDrive/niesr_models_base/swbd_base/swbd_base_latest
-retrieve_learning_rate: 0.0025
+retrieve_learning_rate: 0.0005
 load_optimizer: True
 init_tf_rate: 1.0
 tf_start_decay_epochs: 70
