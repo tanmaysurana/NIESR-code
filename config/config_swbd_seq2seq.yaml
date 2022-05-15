@@ -33,7 +33,7 @@ init_tf_rate: 1.0
 tf_start_decay_epochs: 70
 tf_rate_lowerbound: 1.0
 tf_decay_epochs: 150
-epochs: 300
+epochs: 30
 add_gaussian: False
 gaussian_epoch: 20
 gaussian_std: 0.075
